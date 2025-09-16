@@ -1,35 +1,52 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import TypingArea from "./components/TypingArea";
 import Results from "./components/Results";
+import COMMON_WORDS from "./Words.json";
+
+function generateText(wordCount) {
+  const words = [];
+  for (let i = 0; i < wordCount; i++) {
+    const randomIndex = Math.floor(Math.random() * COMMON_WORDS.length);
+    words.push(COMMON_WORDS[randomIndex]);
+  }
+  return words.join(" ");
+}
 
 function App() {
-  const text = "asd asd asd asd asd asd asd asd asd";
   const [results, setResults] = useState(null);
-  const [show, setShow] = useState(true);
+  const [wordCount, setWordCount] = useState(20);
+  const [text, setText] = useState(generateText(wordCount));
+
+  const [TopSpeed, setTopSpeed] = useState(0)
+  const [openTyping, setOpenTyping] = useState(true);
+  const [openResult, setOpenResult] = useState(false);
 
   function handleFinish(stats) {
-    setShow(false);
-    setTimeout(() => setResults(stats), 300); 
+    setResults(stats);
+    setOpenTyping(false);
+    setOpenResult(true);
   }
 
   function handleRestart() {
-    setShow(false);
-    setTimeout(() => {
-      setResults(null);
-      setShow(true);
-    }, 300);
+    setResults(null);
+    setOpenTyping(true)
+    setOpenResult(false)
+    setText(generateText(wordCount));
   }
 
-  return (
-    <div className="w-screen h-screen bg-blue-700 flex items-center justify-center">
-      <div className="">
+  console.log(results)
 
-      </div>
-        {!results ? (
-          <TypingArea text={text} onFinish={handleFinish} onRestart={handleRestart} />
-        ) : (
-          <Results {...results} onRestart={handleRestart} />
-        )}
+  return (
+    <div className="w-screen h-screen bg-blue-700 flex flex-col items-center justify-center gap-4">
+      {!results ? (
+        <>
+          <TypingArea openTyping={openTyping} wordCount={wordCount} generateText={generateText} setText={setText} text={text} onFinish={handleFinish} onRestart={handleRestart} />
+        </>
+      ) : (
+        <Results {...results} openResult={openResult} setTopSpeed={setTopSpeed} TopSpeed={TopSpeed} onRestart={handleRestart} />
+      )}
+
+      <h1>Top Speed: {TopSpeed}</h1>
     </div>
   );
 }

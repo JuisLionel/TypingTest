@@ -1,5 +1,5 @@
 function WordRenderer({ word, typed = "", isFinal = false, isCurrent = false }) {
-  let baseClass = "mr-2 text-gray-00";
+  let baseClass = "mr-2 text-gray-400";
   if (isCurrent) {
     baseClass += "px-1 border-b-2 border-yellow-400"; 
   }
@@ -51,7 +51,6 @@ function WordRenderer({ word, typed = "", isFinal = false, isCurrent = false }) 
     );
   }
 
-  // untouched word
   return <span className={baseClass}>{word}</span>;
 }
 

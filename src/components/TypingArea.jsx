@@ -2,23 +2,45 @@ import { useState, useEffect, useRef } from "react";
 import WordRenderer from "./WordRenderer";
 import { IoReloadSharp } from "react-icons/io5";
 
-function TypingArea({ text = "", onFinish }) {
+function TypingArea({ text = "", onFinish, setText, wordCount, generateText, openTyping }) {
   const words = text ? text.split(" ") : [];
 
   const [typed, setTyped] = useState("");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [finishedWords, setFinishedWords] = useState([]);
-  const [startTime, setStartTime] = useState(null);
   const [finished, setFinished] = useState(false);
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const timerRef = useRef(null);
 
-  // 🔑 Ref for input
+  console.log(time / 1000)
+
+  const start = () => {
+    if (!isRunning) {
+      setIsRunning(true);
+      timerRef.current = setInterval(() => {
+        setTime((prev) => prev + 10);
+      }, 10);
+    }
+  };
+
+  const stop = () => {
+    setIsRunning(false);
+    clearInterval(timerRef.current);
+  };
+
+  const reset = () => {
+    stop();
+    setTime(0);
+  };
+
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (typed.length === 1 && !startTime) {
-      setStartTime(Date.now());
+    if (typed.length === 1 && !isRunning) {
+      start()
     }
-  }, [typed, startTime]);
+  }, [typed, isRunning]);
 
   function handleChange(e) {
     setTyped(e.target.value);
@@ -39,7 +61,7 @@ function TypingArea({ text = "", onFinish }) {
     const nextIndex = currentWordIndex + 1;
 
     if (nextIndex >= words.length) {
-      const endTime = Date.now();
+      stop()
       setFinished(true);
 
       let correctChars = 0;
@@ -57,8 +79,7 @@ function TypingArea({ text = "", onFinish }) {
         correctChars,
         wrongChars,
         correctWords: allFinished.filter((w) => w.typed === w.target).length,
-        startTime,
-        endTime,
+        time
       });
     } else {
       setCurrentWordIndex(nextIndex);
@@ -98,8 +119,9 @@ function TypingArea({ text = "", onFinish }) {
     setTyped("");
     setCurrentWordIndex(0);
     setFinishedWords([]);
-    setStartTime(null);
+    reset()
     setFinished(false);
+    setText(generateText(wordCount));
 
     setTimeout(() => {
       inputRef.current?.focus();
@@ -107,36 +129,39 @@ function TypingArea({ text = "", onFinish }) {
   }
 
   return (
-    <div className="w-[900px] h-[500px] bg-blue-900 rounded p-4 flex flex-col items-center text-white">
-      <div className="mb-4 bg-blue-700 p-2 w-full h-full rounded text-[20px] leading-relaxed overflow-auto">
-        <div className="flex flex-wrap w-full items-start">
-          {renderWords()}
+    <>
+      <h2 className="text-white">{(time / 1000).toFixed(1)}s</h2>
+      <div className={`w-[900px] h-[500px] bg-blue-900 rounded p-4 flex flex-col items-center text-white ${openTyping ? "Open" : "Close"}`}>
+        <div className="mb-4 bg-blue-700 p-2 w-full h-full rounded text-[20px] leading-relaxed overflow-auto">
+          <div className="flex flex-wrap w-full items-start">
+            {renderWords()}
+          </div>
+        </div>
+
+        <div className="flex w-full">
+          <input
+            ref={inputRef}
+            placeholder="Type here ..."
+            value={typed}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            className="rounded w-full h-[50px] bg-blue-700 p-2 text-white"
+            spellCheck={false}
+            autoFocus
+
+          />
+          <button
+            onClick={restart}
+            className="ml-2 bg-blue-700 text-white px-4 rounded group hover:bg-blue-600 hover:scale-105 transition-all ease-in-out duration-150 flex items-center justify-center"
+          >
+            <IoReloadSharp
+              className="transition-transform duration-300 group-hover:rotate-360"
+              size={30}
+            />
+          </button>
         </div>
       </div>
-
-      <div className="flex w-full">
-        <input
-          ref={inputRef} 
-          placeholder="Type here ..."
-          value={typed}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          className="rounded w-full h-[50px] bg-blue-700 p-2 text-white"
-          spellCheck={false}
-          autoFocus
-          disabled={finished}
-        />
-        <button
-          onClick={restart}
-          className="ml-2 bg-blue-700 text-white px-4 rounded group hover:bg-blue-600 transition-all ease-in-out duration-150 flex items-center justify-center "
-        >
-          <IoReloadSharp
-            className="transition-transform duration-300 group-hover:rotate-360"
-            size={30}
-          />
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
 
