@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 function Results({ correctChars, wrongChars, correctWords, time, onRestart, TopSpeed, setTopSpeed, openResult }) {
   const [ConversionWPM, setConversionWPM] = useState(true);
-  const [ConversionTime, setConversionTime] = useState(true)
+  const [Change, setChange] = useState(true)
 
   const { timeTaken, accuracy, wpm } = calculateStats({
     correctChars,
@@ -31,14 +31,14 @@ function Results({ correctChars, wrongChars, correctWords, time, onRestart, TopS
           <p className="text-2xl font-bold">{accuracy}%</p>
         </div>
 
-        <div onClick={() => setConversionTime(!ConversionTime)} className="bg-blue-700 p-4 rounded hover:scale-102 active:scale-98 transition-all ease-linear duration-100">
-          <p className="text-sm">⏱ Time ({ConversionTime ? "Seconds" : "Minute" })</p>
-          <p className="text-2xl font-bold">{ConversionTime ? (`${timeTaken.toFixed(1)}s`) : (`${(timeTaken / 60).toFixed(1)}s`) }</p>
+        <div className="bg-blue-700 p-4 rounded hover:scale-102 transition-all ease-linear duration-100">
+          <p className="text-sm">⏱ Time</p>
+          <p className="text-2xl font-bold">{timeTaken.toFixed(1)}s</p>
         </div>
 
         <div className="bg-blue-700 p-4 rounded hover:scale-102 transition-all ease-linear duration-100">
-          <p className="text-sm">❌ Mistakes</p>
-          <p className="text-2xl font-bold">{wrongChars}</p>
+          <p className="text-sm">✅️ Correct Words</p>
+          <p className="text-2xl font-bold">{correctWords}</p>
         </div>
 
         <button

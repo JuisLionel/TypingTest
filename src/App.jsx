@@ -1,6 +1,9 @@
-import { use, useState } from "react";
+import { useState } from "react";
+
 import TypingArea from "./components/TypingArea";
 import Results from "./components/Results";
+import Menu from "./components/Menu";
+
 import COMMON_WORDS from "./Words.json";
 
 function generateText(wordCount) {
@@ -38,6 +41,9 @@ function App() {
 
   return (
     <div className="w-screen h-screen bg-blue-700 flex flex-col items-center justify-center gap-4">
+      <Menu TopSpeed={TopSpeed} />
+
+
       {!results ? (
         <>
           <TypingArea openTyping={openTyping} wordCount={wordCount} generateText={generateText} setText={setText} text={text} onFinish={handleFinish} onRestart={handleRestart} />
@@ -45,8 +51,6 @@ function App() {
       ) : (
         <Results {...results} openResult={openResult} setTopSpeed={setTopSpeed} TopSpeed={TopSpeed} onRestart={handleRestart} />
       )}
-
-      <h1>Top Speed: {TopSpeed}</h1>
     </div>
   );
 }
