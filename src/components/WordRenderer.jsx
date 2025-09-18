@@ -20,6 +20,7 @@ function WordRenderer({ word, typed = "", isFinal = false, isCurrent = false }) 
             </span>
           );
         })}
+        
         {typed.length > word.length &&
           typed
             .slice(word.length)
