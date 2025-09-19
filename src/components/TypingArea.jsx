@@ -70,6 +70,7 @@ function TypingArea({
 
       let correctChars = 0;
       let wrongChars = 0;
+      
       const allFinished = [...finishedWords, { typed: typedWord, target }];
       allFinished.forEach(({ typed: t, target: tg }) => {
         const maxLen = Math.max(t.length, tg.length);
@@ -132,7 +133,6 @@ function TypingArea({
           <div className="flex flex-wrap w-full">{renderWords()}</div>
         </div>
 
-        {/* Input + restart button */}
         <div className="flex w-full">
           <input
             ref={inputRef}

@@ -47,13 +47,41 @@ function App() {
     <div className="w-screen h-screen bg-blue-700 flex flex-col items-center justify-center gap-4">
       <Menu TopSpeed={TopSpeed} />
 
-      <Options time={time} TopSpeed={TopSpeed} setWordCount={setWordCount} inputRef={inputRef} setText={setText} generateText={generateText} wordCount={wordCount} />
+      <Options
+        time={time}
+        handleRestart={handleRestart}
+        TopSpeed={TopSpeed}
+        setWordCount={setWordCount}
+        inputRef={inputRef}
+        setText={setText}
+        generateText={generateText}
+        wordCount={wordCount}
+      />
+
       {!results ? (
         <>
-          <TypingArea openTyping={openTyping} wordCount={wordCount} inputRef={inputRef} time={time} setTime={setTime} generateText={generateText} setText={setText} text={text} onFinish={handleFinish} onRestart={handleRestart} />
+          <TypingArea
+            openTyping={openTyping}
+            wordCount={wordCount}
+            inputRef={inputRef}
+            time={time}
+            setTime={setTime}
+            generateText={generateText}
+            setText={setText}
+            text={text}
+            onFinish={handleFinish}
+            onRestart={handleRestart}
+          />
         </>
       ) : (
-        <Results {...results} openResult={openResult} setTopSpeed={setTopSpeed} TopSpeed={TopSpeed} onRestart={handleRestart} wordCount={wordCount} />
+        <Results
+          {...results}
+          openResult={openResult}
+          setTopSpeed={setTopSpeed}
+          TopSpeed={TopSpeed}
+          onRestart={handleRestart}
+          wordCount={wordCount}
+        />
       )}
     </div>
   );
