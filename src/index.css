@@ -17,7 +17,34 @@
     animation: SlideAppHide 250ms ease-out forwards;
 }
 
+.ScrollAnimation {
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 10%;
+}
 
+.thin-scrollbar {
+    scrollbar-width: thin;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        clip-path: inset(0% 0% 100% 0%);
+        scale: 0.8;
+    }
+
+    to {
+        opacity: 1;
+        clip-path: inset(0% 0% 0% 0%);
+        scale: 1;
+    }
+}
 
 @keyframes showApp {
     from {
