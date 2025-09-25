@@ -11,7 +11,11 @@ function TypingArea({
   openTyping,
   time,
   setTime,
-  inputRef
+  inputRef,
+  bgColor,
+  InputColor,
+  containerColor,
+  theme
 }) {
   const words = text ? text.split(" ") : [];
 
@@ -70,7 +74,7 @@ function TypingArea({
 
       let correctChars = 0;
       let wrongChars = 0;
-      
+
       const allFinished = [...finishedWords, { typed: typedWord, target }];
       allFinished.forEach(({ typed: t, target: tg }) => {
         const maxLen = Math.max(t.length, tg.length);
@@ -103,14 +107,15 @@ function TypingArea({
             word={f.target}
             typed={f.typed}
             isFinal={true}
+            theme={theme}
           />
         );
       } else if (idx === currentWordIndex && !finished) {
         return (
-          <WordRenderer key={idx} word={w} typed={typed} isCurrent={true} />
+          <WordRenderer key={idx} word={w} typed={typed} isCurrent={true} theme={theme} />
         );
       } else {
-        return <WordRenderer key={idx} word={w} />;
+        return <WordRenderer key={idx} word={w} theme={theme} />;
       }
     });
   }
@@ -128,8 +133,8 @@ function TypingArea({
 
   return (
     <>
-      <div className={`w-[95%] max-w-4xl min-h-[500px] sm:min-h-[500px] bg-blue-900 rounded p-4 flex flex-col items-center text-white ${openTyping ? "Open" : "Close"}`}>
-        <div className="mb-4 bg-blue-700 p-2 w-full flex-1 rounded text-[16px] sm:text-[18px] leading-relaxed">
+      <div className={`w-[95%] max-w-4xl min-h-[500px] sm:min-h-[500px] ${containerColor} rounded p-4 flex flex-col items-center text-white ${openTyping ? "Open" : "Close"}`}>
+        <div className={`mb-4 ${bgColor} p-2 w-full flex-1 rounded text-[16px] sm:text-[18px] leading-relaxed`}>
           <div className="flex flex-wrap w-full">{renderWords()}</div>
         </div>
 
@@ -140,13 +145,13 @@ function TypingArea({
             value={typed}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            className="rounded w-full h-[45px] sm:h-[50px] bg-blue-700 p-2 text-white"
+            className={`rounded w-full h-[45px] sm:h-[50px] ${bgColor} p-2 outline-none text-[18px] sm:text-[20px] ${InputColor}`}
             spellCheck={false}
             autoFocus
           />
           <button
             onClick={restart}
-            className="ml-2 bg-blue-700 text-white px-3 sm:px-4 rounded group hover:bg-blue-600 hover:scale-105 transition-all ease-in-out duration-150 flex items-center justify-center"
+            className={`ml-2 ${bgColor} ${InputColor} px-3 sm:px-4 rounded group hover:bg-blue-600 hover:scale-105 transition-all ease-in-out duration-150 flex items-center justify-center`}
           >
             <IoReloadSharp
               className="transition-transform duration-300 group-hover:rotate-360"
