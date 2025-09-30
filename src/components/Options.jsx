@@ -3,7 +3,7 @@ export default function Options({ TopSpeed, time, setWordCount, generateText, wo
 
   return (
     <div className={`flex justify-center sm:justify-between items-center w-[95%] max-w-4xl ${textColor}`}>
-      <div className="flex gap-2">
+      <div className={`flex gap-2`}>
         {options.map((num, index) => (
           <div key={index} className="flex items-center">
             <button

@@ -40,27 +40,61 @@ function App() {
   let containerColor;
   let buttonColor;
   let InputColor;
+  let RestrartButton;
+  let ThemeBg;
+  
+  let OptionCorlor
 
   switch (theme) {
     case '1976':
+      bgColor = "bg-[linear-gradient(120deg,_#6ad9c7_0%_20%,_#e94f2e_20%_40%,_#f07c19_40%_60%,_#f7d154_60%_80%,_#4a2c18_80%_100%)]";
+      textColor = "text-black";
+      hoverTextColor = "hover:text-gray-600";
+      containerColor = "bg-[#5b3217]";
+      buttonColor = "bg-[#f7d154] hover:bg-[#f07c19]";
+      InputColor = "text-[#5cb8a1]";
+      ThemeBg = "bg-white/70";
+      OptionCorlor = "bg-[#72461d]"
       break;
 
     case '8008':
+      bgColor = "bg-[#3c4756]";
+      textColor = "text-[#ac4a6f]";
+      hoverTextColor = "hover:text-gray-400";
+      containerColor = "bg-[#a2aebd]";
+      buttonColor = "bg-[#ac4a6f] hover:bg-[#e94f2e]";
+      InputColor = "text-[#ac4a6f]";
+      ThemeBg = "bg-[#2c323e]";
       break;
 
     case '9009':
+      bgColor = "bg-[#b6b09a]";
+      textColor = "text-[#3a3a3c]";
+      hoverTextColor = "hover:text-gray-400";
+      containerColor = "bg-[#7f7b77]";
+      buttonColor = "bg-[#3a3a3c] hover:bg-[#5c5c5e]";
+      InputColor = "text-gray-500";
+      ThemeBg = "bg-[#7f7b77]";
       break;
 
     case 'dots':
+      bgColor = "bg-[#191b25]";
+      textColor = "text-[#e4c24c]";
+      hoverTextColor = "hover:text-gray-400";
+      containerColor = "bg-[#1e2030]";
+      buttonColor = "bg-[#276e8d] hover:bg-[#299169]";
+      InputColor = "text-gray-300";
+      RestrartButton = "bg-[#299169] hover:bg-[#e94f2e]"
+      ThemeBg = "bg-[#232533]";
       break;
 
     case 'light':
       bgColor = "bg-white";
-      textColor = "text-black";
       InputColor = "text-gray-700";
       hoverTextColor = "hover:text-gray-600";
       containerColor = "bg-gray-200";
       buttonColor = "bg-black text-white hover:bg-gray-800";
+      ThemeBg = "bg-gray-200";
       break;
 
     case 'gruvbox':
@@ -69,6 +103,7 @@ function App() {
       hoverTextColor = "hover:text-[#d79921]";
       containerColor = "bg-[#1d2021]";
       buttonColor = "bg-[#c38c21] hover:bg-[#d79921]";
+      ThemeBg = "bg-[#3c3836]";
       break;
 
     case 'leviathan':
@@ -77,9 +112,7 @@ function App() {
       hoverTextColor = "hover:text-[#8ec07c]";
       containerColor = "bg-[#1e2a38]";
       buttonColor = "bg-[#96c166] hover:bg-[#8ec07c]";
-      break;
-
-    case 'kobayashi':
+      ThemeBg = "bg-[#96c166]";
       break;
 
     case 'blue':
@@ -110,7 +143,7 @@ function App() {
       style={{ userSelect: "none" }}
       className={`w-screen h-screen flex flex-col items-center justify-center gap-4 transition-colors duration-300 ${bgColor} ${textColor}`}
     >
-      <Theme theme={theme} setTheme={setTheme} buttonColor={buttonColor} containerColor={containerColor} />
+      <Theme theme={theme} setTheme={setTheme} buttonColor={buttonColor} containerColor={containerColor} ThemeBg={ThemeBg} />
 
       <Options
         time={time}
@@ -140,6 +173,8 @@ function App() {
           bgColor={bgColor}
           theme={theme}
           InputColor={InputColor}
+          RestrartButton={RestrartButton}
+          OptionCorlor={OptionCorlor}
         />
       ) : (
         <Results
@@ -152,6 +187,7 @@ function App() {
           containerColor={containerColor}
           textColor={textColor}
           bgColor={bgColor}
+          OptionCorlor={OptionCorlor}
         />
       )}
     </div>

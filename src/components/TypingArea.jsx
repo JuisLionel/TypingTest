@@ -15,7 +15,9 @@ function TypingArea({
   bgColor,
   InputColor,
   containerColor,
-  theme
+  theme,
+  RestrartButton,
+  OptionCorlor,
 }) {
   const words = text ? text.split(" ") : [];
 
@@ -134,7 +136,7 @@ function TypingArea({
   return (
     <>
       <div className={`w-[95%] max-w-4xl min-h-[500px] sm:min-h-[500px] ${containerColor} rounded p-4 flex flex-col items-center text-white ${openTyping ? "Open" : "Close"}`}>
-        <div className={`mb-4 ${bgColor} p-2 w-full flex-1 rounded text-[16px] sm:text-[18px] leading-relaxed`}>
+        <div className={`mb-4 ${OptionCorlor ? OptionCorlor : bgColor} p-2 w-full flex-1 rounded text-[16px] sm:text-[18px] leading-relaxed`}>
           <div className="flex flex-wrap w-full">{renderWords()}</div>
         </div>
 
@@ -145,13 +147,13 @@ function TypingArea({
             value={typed}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            className={`rounded w-full h-[45px] sm:h-[50px] ${bgColor} p-2 outline-none text-[18px] sm:text-[20px] ${InputColor}`}
+            className={`rounded w-full h-[45px] sm:h-[50px] ${OptionCorlor ? OptionCorlor : bgColor} p-2 outline-none text-[18px] sm:text-[20px] ${InputColor}`}
             spellCheck={false}
             autoFocus
           />
           <button
             onClick={restart}
-            className={`ml-2 ${bgColor} ${InputColor} px-3 sm:px-4 rounded group hover:bg-blue-600 hover:scale-105 transition-all ease-in-out duration-150 flex items-center justify-center`}
+            className={`ml-2 ${OptionCorlor ? OptionCorlor : bgColor} ${RestrartButton ? RestrartButton : InputColor} px-3 sm:px-4 rounded group hover:bg-blue-600 hover:scale-105 transition-all ease-in-out duration-150 flex items-center justify-center`}
           >
             <IoReloadSharp
               className="transition-transform duration-300 group-hover:rotate-360"

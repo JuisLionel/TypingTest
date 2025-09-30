@@ -1,35 +1,60 @@
 
 const THEME_COLORS = {
-  blue: {
-    correct: "text-green-400",
-    default: "text-gray-400",
-    border: "border-yellow-400",
+  1976: {
+    correct: "text-[#e1ba45]",
+    incorrect: "text-red-400",
+    default: "text-[#5cb8a1]",
+    border: "border-purple-400",
+  },
+
+  8008: {
+    correct: "text-[#ac4a6f]",
+    incorrect: "text-red-400",
+    default: "text-gray-500",
+    border: "border-[#ac4a6f]",
+  },
+
+  9009: {
+    correct: "text-green-600",
+    incorrect: "text-red-400",
+    default: "text-gray-500",
+    border: "border-purple-400",
+  },
+
+  dots: {
+    correct: "text-purple-400",
+    incorrect: "text-red-400",
+    default: "text-gray-500",
+    border: "border-purple-400",
+  },
+
+  light: {
+    correct: "text-green-600",
+    incorrect: "text-red-600",
+    default: "text-gray-600",
+    border: "border-green-400",
   },
 
   gruvbox: {
     correct: "text-[#c38c21]",
-    default: "text-gray-300",
+    incorrect: "text-red-600",
+    default: "text-gray-600",
     border: "border-[#c38c21]",
   },
 
   leviathan: {
     correct: "text-[#96c166]",
+    incorrect: "text-[#e57373]",
     default: "text-gray-500",
     border: "border-[#96c166]",
   },
 
-  light: {
-    correct: "text-green-600",
-    default: "text-gray-600",
-    border: "border-yellow-400",
-  },
-  
-  dots: {
+  blue: {
     correct: "text-green-400",
-    default: "text-gray-500",
+    incorrect: "text-red-400",
+    default: "text-gray-400",
     border: "border-yellow-400",
   },
-  
 };
 
 function WordRenderer({ word, typed = "", isFinal = false, isCurrent = false, theme = "blue" }) {
@@ -45,9 +70,9 @@ function WordRenderer({ word, typed = "", isFinal = false, isCurrent = false, th
         {word.split("").map((char, i) => {
           let colorClass = "";
           if (i < typed.length) {
-            colorClass = typed[i] === char ? colors.correct : "text-red-400";
+            colorClass = typed[i] === char ? colors.correct : colors.incorrect;
           } else {
-            colorClass = "text-red-400";
+            colorClass = colors.incorrect;
           }
           return (
             <span key={i} className={colorClass}>
@@ -61,7 +86,7 @@ function WordRenderer({ word, typed = "", isFinal = false, isCurrent = false, th
             .slice(word.length)
             .split("")
             .map((ch, idx) => (
-              <span key={`extra-${idx}`} className="text-red-400">
+              <span key={`extra-${idx}`} className={colors.incorrect}>
                 {ch}
               </span>
             ))}
@@ -75,7 +100,7 @@ function WordRenderer({ word, typed = "", isFinal = false, isCurrent = false, th
         {word.split("").map((char, i) => {
           let colorClass = colors.default;
           if (i < typed.length) {
-            colorClass = typed[i] === char ? colors.correct : "text-red-400";
+            colorClass = typed[i] === char ? colors.correct : colors.incorrect;
           }
           return (
             <span key={i} className={colorClass}>
@@ -83,6 +108,16 @@ function WordRenderer({ word, typed = "", isFinal = false, isCurrent = false, th
             </span>
           );
         })}
+        {/* Show extra characters while typing */}
+        {typed.length > word.length &&
+          typed
+            .slice(word.length)
+            .split("")
+            .map((ch, idx) => (
+              <span key={`extra-current-${idx}`} className={colors.incorrect}>
+                {ch}
+              </span>
+            ))}
       </span>
     );
   }
