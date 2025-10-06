@@ -1,6 +1,6 @@
 <!-- Improved README for TypingTest -->
 
-# ✅ Typing Test
+# ⌨️ Typing Test
 
 ![React](https://img.shields.io/badge/Frontend-ReactJS-61DBFB?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Bundler-Vite-646CFF?logo=vite&logoColor=white)
