@@ -55,7 +55,7 @@ npm run dev
 
 ## 📸 Screenshot
 
-<img src="./Blue.png" alt="Typing preview" style="max-width:100%;height:auto;" />
+<img src="./public/Blue.png" alt="Typing preview" style="max-width:100%;height:auto;" />
 
 ---
 
