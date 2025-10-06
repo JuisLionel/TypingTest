@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaPaintBrush } from "react-icons/fa";
 
-function Theme({ theme, setTheme, containerColor, buttonColor, ThemeBg }) {
+function Theme({ theme, setTheme, buttonColor, ThemeBg }) {
   const [Open, setOpen] = useState(false);
 
   const ThemeValue = [

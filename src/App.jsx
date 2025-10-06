@@ -48,7 +48,7 @@ function App() {
   switch (theme) {
     case '1976':
       bgColor = "bg-[linear-gradient(120deg,_#6ad9c7_0%_20%,_#e94f2e_20%_40%,_#f07c19_40%_60%,_#f7d154_60%_80%,_#4a2c18_80%_100%)]";
-      textColor = "text-black";
+      textColor = "text-white";
       hoverTextColor = "hover:text-gray-600";
       containerColor = "bg-[#5b3217]";
       buttonColor = "bg-[#f7d154] hover:bg-[#f07c19]";

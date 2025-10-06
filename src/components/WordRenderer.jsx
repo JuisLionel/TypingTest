@@ -38,7 +38,7 @@ const THEME_COLORS = {
   gruvbox: {
     correct: "text-[#c38c21]",
     incorrect: "text-red-600",
-    default: "text-gray-600",
+    default: "text-gray-400",
     border: "border-[#c38c21]",
   },
 
