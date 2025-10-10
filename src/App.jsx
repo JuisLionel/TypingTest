@@ -5,13 +5,13 @@ import Results from "./components/Results";
 import Theme from "./components/Theme";
 import Options from "./components/Options";
 
-import COMMON_WORDS from "./Words.json";
+import WORDS from "./Words/english.json";
 
 function generateText(wordCount) {
   const words = [];
   for (let i = 0; i < wordCount; i++) {
-    const randomIndex = Math.floor(Math.random() * COMMON_WORDS.length);
-    words.push(COMMON_WORDS[randomIndex]);
+    const randomIndex = Math.floor(Math.random() * WORDS.length);
+    words.push(WORDS[randomIndex]);
   }
   return words.join(" ");
 }

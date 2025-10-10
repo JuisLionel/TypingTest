@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaPaintBrush } from "react-icons/fa";
 
 function Theme({ theme, setTheme, buttonColor, ThemeBg }) {
   const [Open, setOpen] = useState(false);
+
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
 
   const ThemeValue = [
     { name: "1976", color: "bg-[linear-gradient(120deg,_#6ad9c7_0%_20%,_#e94f2e_20%_40%,_#f07c19_40%_60%,_#f7d154_60%_80%,_#4a2c18_80%_100%)] text-black"},
@@ -20,9 +23,21 @@ function Theme({ theme, setTheme, buttonColor, ThemeBg }) {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") setOpen(false);
     };
+    const handlePointerDownOutside = (ev) => {
+      const target = ev.target;
+      // use closest to handle SVG and nested elements reliably
+      const inMenu = target.closest && target.closest('[data-theme-menu]');
+      const inButton = target.closest && target.closest('[data-theme-button]');
+      if (!inMenu && !inButton) setOpen(false);
+    };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("pointerdown", handlePointerDownOutside);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("pointerdown", handlePointerDownOutside);
+    };
   }, []);
 
   const handleThemeChange = (theme) => {
@@ -33,17 +48,19 @@ function Theme({ theme, setTheme, buttonColor, ThemeBg }) {
   return (
     <>
       <button
+        ref={buttonRef}
+        data-theme-button
         onClick={() => setOpen(!Open)}
         className={`group absolute w-[50px] h-[50px] top-4 ${buttonColor} text-white text-4xl grid place-items-center z-100 rounded hover:scale-105 active:scale-98 transition-all duration-130 ease-linear ${Open ? "left-105" : "left-4"}`}
       >
         {Open ? <IoClose /> : <FaPaintBrush className="group-hover:rotate-90 transition-transform duration-300" />}
       </button>
 
-      <div className={`${Open ? "OpenMenu" : "CloseMenu"} shadow-lm w-[400px] h-full ${ThemeBg} absolute left-0 p-4 overflow-x-auto thin-scrollbar`}>
+  <div ref={menuRef} data-theme-menu className={`${Open ? "OpenMenu" : "CloseMenu"} shadow-lm w-[400px] h-full ${ThemeBg} absolute left-0 p-4 overflow-x-auto thin-scrollbar`}>
         {ThemeValue.map((item, index) => (
           <div
             key={index}
-            onClick={() => handleThemeChange(item.name)}
+            onClick={() => { handleThemeChange(item.name); setOpen(false); }}
             className={`${item.color} w-full h-[130px] rounded ${item.name !== "blue" && "mb-[27px]"} text-4xl flex justify-center items-center hover:scale-102 active:scale-95 transition-all duration-100 ease-in-out ScrollAnimation ${theme === item.name ? "ring-4 ring-orange-500" : "shadow-[0_0_10px_rgba(0,0,0,0.3)]"}`}
           >
             <h1>
