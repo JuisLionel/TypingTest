@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @tailwind utilities;
 
+
+* {
+  font-family: "Funnel Sans";
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
 .Open {
     animation: showApp 250ms ease-out;
 }

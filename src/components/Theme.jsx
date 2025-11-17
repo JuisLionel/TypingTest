@@ -25,7 +25,6 @@ function Theme({ theme, setTheme, buttonColor, ThemeBg }) {
     };
     const handlePointerDownOutside = (ev) => {
       const target = ev.target;
-      // use closest to handle SVG and nested elements reliably
       const inMenu = target.closest && target.closest('[data-theme-menu]');
       const inButton = target.closest && target.closest('[data-theme-button]');
       if (!inMenu && !inButton) setOpen(false);
